@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        .rond {
+            display: flex;
+            width: 500px;
+            height: 500px;
+            background-color: aqua;
+            border-radius: 50%;
+        }
+        .heure {
+            position: absolute;
+            height: 500px;
+            width: 10px;
+            left: 252px;
+            transform: rotate(0);
+        }
+        .aiguilleHeure {
+            margin-top: 125px;
+            height: 25%;
+            width: 100%;
+            background-color: wheat;
+            border-radius: 50px;
+            
+        }
+
+        .seconde {
+            position: absolute;
+            height: 10px;
+            width: 500px;
+            top: 260px;
+            transform: rotate(0deg);
+        }
+        .aiguilleSeconde {
+            height: 100%;
+            width: 50%;
+            background-color: red;
+            border-radius: 50px;
+            float: right;
+        }
+
+        .minute {
+            position: absolute;
+            height: 500px;
+            width: 10px;
+            left: 252px;
+            transform: rotate(20deg);
+        }
+        .aigulleMinute {
+            margin-top: 20px;
+            height: 45%;
+            width: 100%;
+            background-color: black;
+            border-radius: 50px;
+        }
+
+        .chiffre-container {
+            position: relative;
+            top: 0; 
+            left: 250px; 
+        }
+        .chiffre {
+            font-size: 30px;
+            position: absolute;
+        }
+        
+    </style>
+</head>
+<body>
+    <p class="para"></p>
+
+    <div class="rond">
+        <div class="minute">
+            <div class="aigulleMinute"></div>
+        </div>
+        <div class="heure">
+            <div class="aiguilleHeure"></div>
+        </div>
+        
+        <div class="seconde">
+            <div class="aiguilleSeconde"></div>
+        </div>
+        <span class="chiffre-container" style="transform: rotate(30deg);">
+                <span class="chiffre" style="transform: rotate(-30deg);">1</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(60deg);">
+                <span class="chiffre" style="transform: rotate(-60deg);">2</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(90deg);">
+                <span class="chiffre" style="transform: rotate(-90deg);">3</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(120deg);">
+                <span class="chiffre" style="transform: rotate(-120deg);">4</span>
+            </span>
+            <span class="chiffre-container" style=" transform: rotate(150deg);">
+                <span class="chiffre" style="transform: rotate(-150deg);">5</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(180deg);">
+                <span class="chiffre" style="transform: rotate(-180deg);">6</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(210deg);">
+                <span class="chiffre" style="transform: rotate(-210deg);">7</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(240deg);">
+                <span class="chiffre" style="transform: rotate(-240deg);">8</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(270deg);">
+                <span class="chiffre" style="transform: rotate(-270deg);">9</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(300deg);">
+                <span class="chiffre" style="transform: rotate(-300deg);">10</span>
+            </span>
+            <span class="chiffre-container" style=" transform: rotate(330deg);">
+                <span class="chiffre" style="transform: rotate(-330deg);">11</span>
+            </span>
+            <span class="chiffre-container" style="transform: rotate(360deg);">
+                <span class="chiffre" style="transform: rotate(-360deg);">12</span>
+            </span>
+        
+    </div>
+    
+    <script>
+        let heure = document.querySelector('.heure'),
+            minute = document.querySelector('.minute'),
+            seconde = document.querySelector('.seconde');
+
+        let date = new Date(),
+            hourNow = date.getHours(),
+            minuteNow = date.getMinutes(),
+            secondNow = date.getSeconds();
+
+            
+        let degreHeure = hourNow*30,
+            degreMinute = minuteNow*6,
+            degreSeconde = secondNow*6,
+            isHalf = true, 
+            moinsQuart = true;
+            // let degreHeure = 330,
+            // degreMinute = 174,
+            // degreSeconde = 0,
+            
+
+        if((minuteNow>30) && (minuteNow<45) ) {
+            degreHeure += 15;
+        } else if((minuteNow>45) && (minuteNow<60) ) {
+            degreHeure += 30;
+        }
+
+        seconde.style.transform = 'rotate('+degreSeconde+'deg)';
+        minute.style.transform = 'rotate('+degreMinute+'deg)';
+        heure.style.transform = 'rotate('+degreHeure+'deg)';
+
+        setInterval(() => {
+            degreSeconde = degreSeconde + 6;
+            seconde.style.transform = 'rotate('+degreSeconde+'deg)';
+            console.log(degreSeconde);
+            if(degreSeconde === 360) {
+                console.log('ato');
+                degreMinute += 6;
+                degreSeconde =0;
+                minute.style.transform = 'rotate('+degreMinute+'deg)';
+            }
+            if((degreMinute === 180) && (isHalf)) {
+                degreHeure += 15;
+                heure.style.transform = 'rotate('+degreHeure+'deg)';
+                isHalf = false;
+            }
+            if((degreMinute === 270) && (moinsQuart)) {
+                degreHeure += 15;
+                heure.style.transform = 'rotate('+degreHeure+'deg)';
+                moinsQuart = false;
+            }
+            if(degreMinute === 360) {
+                // degreHeure += 5;
+                // heure.style.transform = 'rotate('+degreHeure+'deg)';
+                degreMinute = 0;
+                isHalf = true;
+                moinsQuart = true;
+            }
+        }, 1000);
+
+
+        
+    </script>
+</body>
+</html>
